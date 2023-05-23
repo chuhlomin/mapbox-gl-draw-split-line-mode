@@ -43,16 +43,16 @@ const SplitLineMode = {
         );
         const afterCutMultiLineString = combine(collected).features[0];
         afterCutMultiLineString.id = mainFeature.id;
+        afterCutMultiLineString.properties = mainFeature.properties;
         this._ctx.api.add(afterCutMultiLineString);
-        this.fireUpdate(afterCutMultiLineString, mainFeature)
+        this.fireUpdate(afterCutMultiLineString)
       });
     });
   },
-  fireUpdate: function(newFeatures, mainFeature) {
+  fireUpdate: function(newFeatures) {
     this.map.fire(UPDATE, {
         action: 'SplitLine',
         features: newFeatures,
-        mainFeature: mainFeature
     });
   }
 };
