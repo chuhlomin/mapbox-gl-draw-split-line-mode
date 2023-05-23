@@ -1,8 +1,11 @@
-import { geojsonTypes, events } from "@mapbox/mapbox-gl-draw/src/constants";
 import lineSplit from "@turf/line-split";
 import combine from "@turf/combine";
 import flatten from "@turf/flatten";
 import { featureCollection } from "@turf/helpers";
+
+const LINE_STRING = 'LineString'
+const MULTI_LINE_STRING = 'MultiLineString'
+const UPDATE = 'draw.update'
 
 const SplitLineMode = {
   onSetup: function ({ spliter }) {
@@ -24,8 +27,8 @@ const SplitLineMode = {
         flatten(mainFeature).features.forEach((feature) => {
           feature.properties = mainFeature.properties;
           if (
-            feature.geometry.type === geojsonTypes.LINE_STRING ||
-            feature.geometry.type === geojsonTypes.MULTI_LINE_STRING
+            feature.geometry.type === LINE_STRING ||
+            feature.geometry.type === MULTI_LINE_STRING
           ) {
             const afterCut = lineSplit(feature, cut);
             if (afterCut.features.length < 1)
@@ -47,7 +50,7 @@ const SplitLineMode = {
     });
   },
   fireUpdate: function(newF) {
-    this.map.fire(events.UPDATE, {
+    this.map.fire(UPDATE, {
         action: 'SplitLine',
         features: newF
     });
