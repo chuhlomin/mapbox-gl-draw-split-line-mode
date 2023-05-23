@@ -21,8 +21,8 @@ const SplitLineMode = {
     this.changeMode(state.spliter, (cut) => {
       state.main.forEach((mainFeature, idx) => {
         const splitedFeatures = [];
-        console.log(mainFeature);
         flatten(mainFeature).features.forEach((feature) => {
+          feature.properties = mainFeature.properties;
           if (
             feature.geometry.type === geojsonTypes.LINE_STRING ||
             feature.geometry.type === geojsonTypes.MULTI_LINE_STRING
