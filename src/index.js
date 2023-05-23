@@ -1,4 +1,4 @@
-import { geojsonTypes, modes, events, updateActions } from "@mapbox/mapbox-gl-draw/src/constants";
+import { geojsonTypes, events } from "@mapbox/mapbox-gl-draw/src/constants";
 import lineSplit from "@turf/line-split";
 import combine from "@turf/combine";
 import flatten from "@turf/flatten";
@@ -21,6 +21,7 @@ const SplitLineMode = {
     this.changeMode(state.spliter, (cut) => {
       state.main.forEach((mainFeature, idx) => {
         const splitedFeatures = [];
+        console.log(mainFeature);
         flatten(mainFeature).features.forEach((feature) => {
           if (
             feature.geometry.type === geojsonTypes.LINE_STRING ||
