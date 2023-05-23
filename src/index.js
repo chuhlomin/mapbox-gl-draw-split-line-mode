@@ -25,12 +25,16 @@ const SplitLineMode = {
       state.main.forEach((mainFeature, idx) => {
         const splitedFeatures = [];
         flatten(mainFeature).features.forEach((feature) => {
-          feature.properties = mainFeature.properties;
           if (
             feature.geometry.type === LINE_STRING ||
             feature.geometry.type === MULTI_LINE_STRING
           ) {
             const afterCut = lineSplit(feature, cut);
+
+            afterCut.features.forEach((f) => {
+              f.properties = mainFeature.properties;
+            });
+
             if (afterCut.features.length < 1)
               splitedFeatures.push(featureCollection([feature]));
             else splitedFeatures.push(afterCut);
