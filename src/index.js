@@ -44,6 +44,7 @@ const SplitLineMode = {
         const afterCutMultiLineString = combine(collected).features[0];
         afterCutMultiLineString.id = mainFeature.id;
         afterCutMultiLineString.properties = mainFeature.properties;
+        console.log('afterCutMultiLineString', afterCutMultiLineString);
         this._ctx.api.add(afterCutMultiLineString);
         this.fireUpdate(afterCutMultiLineString)
       });
