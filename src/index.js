@@ -30,11 +30,6 @@ const SplitLineMode = {
             feature.geometry.type === MULTI_LINE_STRING
           ) {
             const afterCut = lineSplit(feature, cut);
-
-            afterCut.features.forEach((f) => {
-              f.properties = mainFeature.properties;
-            });
-
             if (afterCut.features.length < 1)
               splitedFeatures.push(featureCollection([feature]));
             else splitedFeatures.push(afterCut);
@@ -49,14 +44,15 @@ const SplitLineMode = {
         const afterCutMultiLineString = combine(collected).features[0];
         afterCutMultiLineString.id = mainFeature.id;
         this._ctx.api.add(afterCutMultiLineString);
-        this.fireUpdate(afterCutMultiLineString)
+        this.fireUpdate(afterCutMultiLineString, mainFeature)
       });
     });
   },
-  fireUpdate: function(newF) {
+  fireUpdate: function(newFeatures, mainFeature) {
     this.map.fire(UPDATE, {
         action: 'SplitLine',
-        features: newF
+        features: newFeatures,
+        mainFeature: mainFeature
     });
   }
 };
